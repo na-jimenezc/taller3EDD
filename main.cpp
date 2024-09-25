@@ -23,14 +23,20 @@
 
         abrirArchivo(nombreArchivo, arbolito);
         
-        std::cout<<"Impresión preOrden"<<std::endl;
+        std::cout<<"\nImpresión preOrden"<<std::endl;
         arbolito.preOrden();
 
-        std::cout<<"Impresión posOrden"<<std::endl;
+        std::cout<<std::endl;
+
+        std::cout<<"\nImpresión posOrden"<<std::endl;
         arbolito.posOrden();
+
+        std::cout<<std::endl;
         
-        std::cout<<"Impresión inOrden"<<std::endl;
+        std::cout<<"\nImpresión inOrden"<<std::endl;
         arbolito.inOrden();
+
+        std::cout<<std::endl;
 
         return 0;
     }
