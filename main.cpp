@@ -1,4 +1,4 @@
-/*Taller 3*/
+  /*Taller 3*/
    //Katheryn Guasca
    //Miguel Laiton
    //Natalia Jiménez
@@ -16,6 +16,7 @@
 
         ArbolAVL<int> arbolito;
         std::string nombreArchivo;
+        char fin;
 
         std::cout<<"¡Bienvenido a nuestro taller"<<std::endl;
         std::cout<<"Ingrese el nombre del archivo: ";
@@ -38,7 +39,11 @@
 
         std::cout<<std::endl;
 
-        return 0;
+        std::cout<<"\nPresione cualquier tecla para cerrar el programa...";
+        std::cin.ignore(); 
+        std::cin.get();    
+
+    return 0;
     }
 
     void abrirArchivo(std::string nombreArchivo, ArbolAVL<int>& arbolito){
