@@ -81,12 +81,7 @@ Nodo<T>* ArbolAVL<T>::rotarDerecha(Nodo<T>* y) {
     return x;
 }
 
-template<class T>
-int ArbolAVL<T>::altura(Nodo<T>* nodo) {
-    return nodo ? nodo->obtenerAltura() : 0;
-}
-
-template <class T>
+    template <class T>
     int ArbolAVL<T>::altura(){
        if(this->esVacio()){
         return -1;
@@ -94,7 +89,34 @@ template <class T>
         return this->altura(this->raiz);
        }
     }
-
+    
+    template <class T>
+    int ArbolAVL<T>::altura(Nodo<T> * nodoActual){
+       int altura;
+    
+        if(nodoActual->esHoja()){
+            altura = 0;
+        }else{
+            int alturaIzq=-1;
+            int alturaDer=-1;
+    
+            if(nodoActual->obtenerHijoIzq() != nullptr){
+                alturaIzq = this->altura(nodoActual->obtenerHijoIzq());
+            }
+    
+            if(nodoActual->obtenerHijoDer() != nullptr){
+                alturaDer = this->altura(nodoActual->obtenerHijoDer());
+            }
+    
+            if(alturaIzq > alturaDer){
+                altura = alturaIzq + 1;
+            }else{
+                altura = alturaDer + 1;
+            }
+        }
+    
+       return altura;
+    }
 template<class T>
 Nodo<T>* ArbolAVL<T>::rotarIzquierda(Nodo<T>* x) {
     Nodo<T>* y = x->obtenerHijoDer();

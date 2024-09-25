@@ -12,7 +12,6 @@ class ArbolAVL {
 protected:
     Nodo<T>* raiz;
 
-    int altura(Nodo<T>* nodo);
     int obtenerBalance(Nodo<T>* nodo);
 
     Nodo<T>* rotarDerecha(Nodo<T>* y);
@@ -26,15 +25,13 @@ public:
     int obtenerNivel(Nodo<T>* nodo, T valor, int nivel);
     bool esVacio();
     T& datoRaiz();
-    int altura();  
     int tamano();
     int tamano(Nodo<T> * nodoActual);
     bool insertar(T& val);
     bool eliminar(T& val);
     bool buscar(T& val);
-
-
-
+    int altura();
+    int altura(Nodo<T> * nodoActual);  
 
     void inOrden(Nodo<T>* nodo, std::vector<T>& elementos);
     std::vector<T> inOrden();
