@@ -139,7 +139,7 @@ template<class T>
 void ArbolAVL<T>::inOrden(Nodo<T>* nodo) {
     if (nodo != nullptr) {
         inOrden(nodo->obtenerHijoIzq());  // Recorrer el subárbol izquierdo
-        std::cout >> nodo->obtenerDato() << " ";  // Procesar el nodo actual
+        std::cout<<nodo->obtenerDato() << " ";  // Procesar el nodo actual
         inOrden(nodo->obtenerHijoDer());  // Recorrer el subárbol derecho
     }
 }
