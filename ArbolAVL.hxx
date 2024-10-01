@@ -8,6 +8,30 @@ ArbolAVL<T>::~ArbolAVL() {
     delete raiz;
 }
 
+template<class T>
+int ArbolAVL<T>::obtenerNivel(Nodo<T>* nodo, T valor, int nivel) {
+    if (nodo == nullptr) {
+        return -1; // Si el nodo no se encuentra, devolvemos -1
+    }
+
+    if (nodo->obtenerDato() == valor) {
+        return nivel; // Si encontramos el valor, devolvemos el nivel actual
+    }
+
+    // Buscamos en el subárbol izquierdo si el valor es menor
+    if (valor < nodo->obtenerDato()) {
+        return obtenerNivel(nodo->obtenerHijoIzq(), valor, nivel + 1);
+    }
+
+    // Buscamos en el subárbol derecho si el valor es mayor
+    return obtenerNivel(nodo->obtenerHijoDer(), valor, nivel + 1);
+}
+
+template<class T>
+int ArbolAVL<T>::obtenerNivel(T valor) {
+    return obtenerNivel(raiz, valor, 0);  // Inicia desde la raíz con el nivel 0
+}
+
     template <class T>
     bool ArbolAVL<T>::esVacio(){
        if(this->raiz != nullptr){
@@ -57,12 +81,7 @@ Nodo<T>* ArbolAVL<T>::rotarDerecha(Nodo<T>* y) {
     return x;
 }
 
-template<class T>
-int ArbolAVL<T>::altura(Nodo<T>* nodo) {
-    return nodo ? nodo->obtenerAltura() : 0;
-}
-
-template <class T>
+    template <class T>
     int ArbolAVL<T>::altura(){
        if(this->esVacio()){
         return -1;
@@ -70,7 +89,34 @@ template <class T>
         return this->altura(this->raiz);
        }
     }
-
+    
+    template <class T>
+    int ArbolAVL<T>::altura(Nodo<T> * nodoActual){
+       int altura;
+    
+        if(nodoActual->esHoja()){
+            altura = 0;
+        }else{
+            int alturaIzq=-1;
+            int alturaDer=-1;
+    
+            if(nodoActual->obtenerHijoIzq() != nullptr){
+                alturaIzq = this->altura(nodoActual->obtenerHijoIzq());
+            }
+    
+            if(nodoActual->obtenerHijoDer() != nullptr){
+                alturaDer = this->altura(nodoActual->obtenerHijoDer());
+            }
+    
+            if(alturaIzq > alturaDer){
+                altura = alturaIzq + 1;
+            }else{
+                altura = alturaDer + 1;
+            }
+        }
+    
+       return altura;
+    }
 template<class T>
 Nodo<T>* ArbolAVL<T>::rotarIzquierda(Nodo<T>* x) {
     Nodo<T>* y = x->obtenerHijoDer();
@@ -135,18 +181,22 @@ Nodo<T>* ArbolAVL<T>::insertar(Nodo<T>* nodo, T& val) {
     return nodo;
 }
 
-template<class T>
-void ArbolAVL<T>::inOrden(Nodo<T>* nodo) {
+template <class T>
+std::vector<T> ArbolAVL<T>::inOrden() {
+    std::vector<T> elementos;
+    inOrden(raiz, elementos);  
+    return elementos;
+}
+
+template <class T>
+void ArbolAVL<T>::inOrden(Nodo<T>* nodo, std::vector<T>& elementos) {
     if (nodo != nullptr) {
-        inOrden(nodo->obtenerHijoIzq());  // Recorrer el subárbol izquierdo
-        std::cout<<nodo->obtenerDato() << " ";  // Procesar el nodo actual
-        inOrden(nodo->obtenerHijoDer());  // Recorrer el subárbol derecho
+        inOrden(nodo->obtenerHijoIzq(), elementos);  
+        elementos.push_back(nodo->obtenerDato());    
+        inOrden(nodo->obtenerHijoDer(), elementos); 
     }
 }
-template<class T>
-void ArbolAVL<T>::inOrden() {
-    inOrden(raiz);  // Llama a la versión recursiva con la raíz del árbol
-}
+
 
 template<class T>
 bool ArbolAVL<T>::insertar(T& val) {
