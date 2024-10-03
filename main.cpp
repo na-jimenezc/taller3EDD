@@ -25,7 +25,7 @@ int main() {
     abrirArchivo(nombreArchivo, arbolito);
 
     // Realiza el recorrido inOrden y almacena los resultados
-    std::vector<int> resultadoInorden = arbolito.inOrden(); // Suponiendo que inOrden devuelve un vector
+    std::vector<int> resultadoInorden = arbolito.inOrden(); 
     std::cout << "\nImpresión inOrden:" << std::endl;
     for (int valor : resultadoInorden) {
         std::cout << valor << " ";
