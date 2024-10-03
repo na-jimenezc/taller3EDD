@@ -11,34 +11,47 @@
 #include <string>
 #include <vector>
 
-void abrirArchivo(std::string nombreArchivo, ArbolAVL<int>& arbolito);
-void calcularMediana(ArbolAVL<int>& arbolito);
+void abrirArchivo(const std::string& nombreArchivo, ArbolAVL<int>& arbolito);
+void calcularMediana(ArbolAVL<int>& arbolito, const std::string& archivoMediana);
 
 int main() {
-
     ArbolAVL<int> arbolito;
     std::string nombreArchivo;
 
     std::cout << "¡Bienvenido a nuestro taller!" << std::endl;
-    std::cout << "Ingrese el nombre del archivo: ";
+    std::cout << "Ingrese el nombre del archivo : ";
     std::cin >> nombreArchivo;
 
     abrirArchivo(nombreArchivo, arbolito);
-    
-    std::cout << "\nImpresión preOrden" << std::endl;
-    arbolito.preOrden();
+
+    // Realiza el recorrido inOrden y almacena los resultados
+    std::vector<int> resultadoInorden = arbolito.inOrden(); // Suponiendo que inOrden devuelve un vector
+    std::cout << "\nImpresión inOrden:" << std::endl;
+    for (int valor : resultadoInorden) {
+        std::cout << valor << " ";
+    }
     std::cout << std::endl;
 
-    std::cout << "\nImpresión posOrden" << std::endl;
-    arbolito.posOrden();
+    // Realiza el recorrido preOrden y muestra los resultados
+    std::cout << "\nImpresión preOrden:" << std::endl;
+    arbolito.preOrden(); // Suponiendo que preOrden imprime directamente
     std::cout << std::endl;
 
-    std::cout << "\nImpresión inOrden" << std::endl;
-    arbolito.inOrden();
+    // Realiza el recorrido posOrden y muestra los resultados
+    std::cout << "\nImpresión posOrden:" << std::endl;
+    arbolito.posOrden(); // Suponiendo que posOrden imprime directamente
     std::cout << std::endl;
 
-    // Calcular y mostrar la mediana
-    calcularMediana(arbolito);
+    // Determina el nombre del archivo de mediana según el archivo de entrada
+    std::string archivoMediana;
+    if (nombreArchivo == "in_01.txt") {
+        archivoMediana = "median_01.txt";
+    } else {
+        archivoMediana = "median_00.txt";
+    }
+
+    // Calcular y guardar la mediana en el archivo correspondiente
+    calcularMediana(arbolito, archivoMediana);
 
     std::cout << "\nPresione cualquier tecla para cerrar el programa...";
     std::cin.ignore(); 
@@ -47,7 +60,7 @@ int main() {
     return 0;
 }
 
-void abrirArchivo(std::string nombreArchivo, ArbolAVL<int>& arbolito) {
+void abrirArchivo(const std::string& nombreArchivo, ArbolAVL<int>& arbolito) {
     // Abrir el archivo y procesar las operaciones (A = agregar, E = eliminar)
     std::ifstream archivo(nombreArchivo);
     
@@ -66,10 +79,8 @@ void abrirArchivo(std::string nombreArchivo, ArbolAVL<int>& arbolito) {
         ss >> letra >> valor;
 
         if (letra == 'A') {
-            std::cout << "Se ha agregado: " << valor << std::endl;
             arbolito.insertar(valor);  
         } else if (letra == 'E') {
-            std::cout << "Ha sido eliminado: " << valor << std::endl;
             arbolito.eliminar(valor);  
         } else {
             std::cerr << "La letra ingresada no es válida: " << letra << std::endl;
@@ -79,7 +90,7 @@ void abrirArchivo(std::string nombreArchivo, ArbolAVL<int>& arbolito) {
     archivo.close();
 }
 
-void calcularMediana(ArbolAVL<int>& arbolito) {
+void calcularMediana(ArbolAVL<int>& arbolito, const std::string& archivoMediana) {
     // Obtener el recorrido inOrden para tener los elementos ordenados
     std::vector<int> elementos = arbolito.inOrden();
     int n = elementos.size();
@@ -89,22 +100,38 @@ void calcularMediana(ArbolAVL<int>& arbolito) {
         return;
     }
 
+    std::ofstream archivo(archivoMediana);
+
+    if (!archivo.is_open()) {
+        std::cerr << "No se pudo abrir el archivo de salida: " << archivoMediana << std::endl;
+        return;
+    }
+
     std::cout << "\nCálculo de la mediana:" << std::endl;
 
     // Si la cantidad de elementos es impar
     if (n % 2 != 0) {
         int mediana = elementos[n / 2];
+        archivo << "La mediana es: " << mediana << std::endl;
+        archivo << "El nivel de la mediana (" << mediana << ") es: " << arbolito.obtenerNivel(mediana) << std::endl;
         std::cout << "La mediana es: " << mediana << std::endl;
-        std::cout << "El nivel de la mediana (" << mediana << ") es: " << arbolito.obtenerNivel(mediana) << std::endl;
     } else {
         // Si la cantidad de elementos es par
         int valor1 = elementos[(n / 2) - 1];
         int valor2 = elementos[n / 2];
         double mediana = (valor1 + valor2) / 2.0;
 
-        std::cout << "Los dos valores centrales son: " << valor1 << " y " << valor2 << std::endl;
+        archivo << "Los dos valores centrales son: " << valor1 << " y " << valor2 << std::endl;
+        archivo << "La mediana es: " << mediana << std::endl;
+        archivo << "El nivel del valor central 1 (" << valor1 << ") es: " << arbolito.obtenerNivel(valor1) << std::endl;
+        archivo << "El nivel del valor central 2 (" << valor2 << ") es: " << arbolito.obtenerNivel(valor2) << std::endl;
+        
         std::cout << "La mediana es: " << mediana << std::endl;
-        std::cout << "El nivel del valor central 1 (" << valor1 << ") es: " << arbolito.obtenerNivel(valor1) << std::endl;
-        std::cout << "El nivel del valor central 2 (" << valor2 << ") es: " << arbolito.obtenerNivel(valor2) << std::endl;
     }
+
+    archivo.close();
 }
+
+
+
+

@@ -1,34 +1,34 @@
 #include "Nodo.h"
-//Constructor del Nodo
+
+// Constructor sin parámetros
 template<class T>
 Nodo<T>::Nodo() : hijoIzq(nullptr), hijoDer(nullptr), altura(0) {}
 
-//Cuando recibe un valor tipo T
+// Constructor cuando recibe un valor tipo T
 template<class T>
 Nodo<T>::Nodo(T val) : dato(val), hijoIzq(nullptr), hijoDer(nullptr), altura(1) {}
 
+// Destructor
 template<class T>
 Nodo<T>::~Nodo() {
-    if (hijoIzq != nullptr) {
-        delete hijoIzq;
-    }
-    if (hijoDer != nullptr) {
-        delete hijoDer;
-    }
+    // Eliminación automática de hijos en el destructor
+    delete hijoIzq;
+    delete hijoDer;
 }
 
+// Métodos de acceso
 template<class T>
 T& Nodo<T>::obtenerDato() {
     return dato;
 }
 
 template<class T>
-void Nodo<T>::fijarDato(T& val) {
+void Nodo<T>::fijarDato(const T& val) {
     dato = val;
 }
 
 template<class T>
-Nodo<T>* Nodo<T>::obtenerHijoIzq() {
+Nodo<T>* Nodo<T>::obtenerHijoIzq() const {
     return hijoIzq;
 }
 
@@ -38,7 +38,7 @@ void Nodo<T>::fijarHijoIzq(Nodo<T>* hijo) {
 }
 
 template<class T>
-Nodo<T>* Nodo<T>::obtenerHijoDer() {
+Nodo<T>* Nodo<T>::obtenerHijoDer() const {
     return hijoDer;
 }
 
@@ -48,7 +48,7 @@ void Nodo<T>::fijarHijoDer(Nodo<T>* hijo) {
 }
 
 template<class T>
-int Nodo<T>::obtenerAltura() {
+int Nodo<T>::obtenerAltura() const {
     return altura;
 }
 
@@ -56,8 +56,4 @@ template<class T>
 void Nodo<T>::fijarAltura(int nuevaAltura) {
     altura = nuevaAltura;
 }
- //Mirar si ese nodo es una hoja 
-template<class T>
-bool Nodo<T>::esHoja() {
-    return (hijoIzq == nullptr && hijoDer == nullptr);
-}
+

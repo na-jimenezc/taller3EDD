@@ -1,1 +1,2 @@
-4485.5
+La mediana es: 4599
+El nivel de la mediana (4599) es: 11

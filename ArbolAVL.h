@@ -3,9 +3,7 @@
 
 #include "Nodo.h"
 #include <iostream>
-#include <queue>
 #include <vector>
-
 
 template<class T>
 class ArbolAVL {
@@ -13,7 +11,6 @@ protected:
     Nodo<T>* raiz;
 
     int obtenerBalance(Nodo<T>* nodo);
-
     Nodo<T>* rotarDerecha(Nodo<T>* y);
     Nodo<T>* rotarIzquierda(Nodo<T>* x);
     Nodo<T>* insertar(Nodo<T>* nodo, T& val);
@@ -21,31 +18,33 @@ protected:
     Nodo<T>* encontrarMinimo(Nodo<T>* nodo);
 
 public:
-    int obtenerNivel(T valor);
-    int obtenerNivel(Nodo<T>* nodo, T valor, int nivel);
-    bool esVacio();
-    T& datoRaiz();
-    int tamano();
-    int tamano(Nodo<T> * nodoActual);
-    bool insertar(T& val);
-    bool eliminar(T& val);
-    bool buscar(T& val);
-    int altura();
-    int altura(Nodo<T> * nodoActual);  
-
-    void inOrden(Nodo<T>* nodo, std::vector<T>& elementos);
-    std::vector<T> inOrden();
-
-
-    void preOrden();
-    void preOrden(Nodo<T> * nodoActual);
-    void posOrden();
-    void posOrden(Nodo<T> * nodoActual);
-    void nivelOrden(); 
     ArbolAVL();
     ~ArbolAVL();
 
+    int obtenerNivel(T valor);
+    bool esVacio();
+    T& datoRaiz();
+    int tamano();
+    int altura();
+    
+    bool insertar(T& val);
+    bool eliminar(T& val);
+    bool buscar(T& val);
+    std::vector<T> inOrden(); 
+    void preOrden();
+    void posOrden();
+    
+private:
+    int obtenerNivel(Nodo<T>* nodo, T valor, int nivel);
+    int tamano(Nodo<T>* nodoActual);
+    int altura(Nodo<T>* nodoActual);
+    
+    void inOrden(Nodo<T>* nodoActual, std::vector<T>& elementos);
+    void preOrden(Nodo<T>* nodoActual);
+    void posOrden(Nodo<T>* nodoActual);
 };
 
 #include "ArbolAVL.hxx"
 #endif
+
+

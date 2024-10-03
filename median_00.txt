@@ -1,1 +1,2 @@
-5
+La mediana es: 5
+El nivel de la mediana (5) es: 0
