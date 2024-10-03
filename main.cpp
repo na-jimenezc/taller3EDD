@@ -67,6 +67,9 @@ void abrirArchivo(const std::string& nombreArchivo, ArbolAVL<int>& arbolito) {
     if (!archivo.is_open()) {
         std::cerr << "No fue posible abrir el archivo" << std::endl;
         return;
+    }else{
+     std::cout << "El archivo se abrio con exito" << std::endl;
+
     }
 
     std::string linea;
